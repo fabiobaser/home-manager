@@ -82,7 +82,6 @@
       lll = "eza -T -L 3 --icons --group-directories-first -I .git";
       # Lazy
       lg = "lazygit";
-
     };
   };
 
