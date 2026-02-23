@@ -166,7 +166,7 @@
     settings = {
       user = {
         name = "Fabio Baser";
-        email = "git@fabiobaser";
+        email = "git@fabiobaser.de";
       };
       init = {
         defaultBranch = "main";
