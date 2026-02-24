@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.username = "fabiobaser";
@@ -13,6 +13,7 @@
     # JavaScript Stuff
     pkgs.bun
     pkgs.pnpm
+    pkgs.fnm
     # Libs
     pkgs.gnumake
     pkgs.gcc
@@ -34,6 +35,10 @@
   home.file = {
     ".config/nvim" = {
       source= ~/dotfiles/nvim;
+      recursive = true;
+    };
+    ".config/tmuxinator" = {
+      source= ~/dotfiles/tmuxinator;
       recursive = true;
     };
     # ".tmux.conf".source = ~/dotfiles/.tmux.conf;
@@ -83,6 +88,7 @@
       # Lazy
       lg = "lazygit";
     };
+    initContent = let zshConfigEarlyInit = lib.mkOrder 500 ""; zshConfig = lib.mkOrder 1000 ''eval "$(fnm env --shell zsh)"''; in lib.mkMerge [ zshConfigEarlyInit zshConfig ];
   };
 
   programs.tmux = {
@@ -91,6 +97,7 @@
     baseIndex = 1; # Base Index for windows and panes
     escapeTime = 10; # Milliseconds tmux waits after an escape is input
     keyMode = "vi";
+    tmuxinator.enable = true;
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.dotbar;
