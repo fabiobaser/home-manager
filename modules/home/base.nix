@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, flakeRoot, ... }:
 
 {
   home.username = "fabiobaser";
@@ -14,6 +14,7 @@
     eza
     ripgrep
     lazygit
+    starship
     # JavaScript
     bun
     pnpm
@@ -24,15 +25,15 @@
     cargo
   ];
 
+  home.file.".config/nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/nvim";
+  };
+
+  home.file.".config/tmuxinator" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/tmuxinator";
+  };
+
   home.file = {
-    # ".config/nvim" = {
-    #   source    = ~/dotfiles/nvim;
-    #   recursive = true;
-    # };
-    # ".config/tmuxinator" = {
-    #   source    = ~/dotfiles/tmuxinator;
-    #   recursive = true;
-    # };
   };
 
   home.sessionVariables = {

@@ -13,14 +13,18 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, nix-darwin, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }:
     let
+
+      flakeRoot = self;
+
       mkLinux = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
           ./modules/home/base.nix
           ./modules/home/linux.nix
         ];
+	extraSpecialArgs = { inherit flakeRoot; };
       };
 
       mkDarwin = nix-darwin.lib.darwinSystem {
@@ -30,6 +34,7 @@
           home-manager.darwinModules.home-manager
           {
             home-manager = {
+	      extraSpecialArgs = { inherit flakeRoot; };
               useGlobalPkgs   = true;
               useUserPackages = true;
               users.fabiobaser.imports = [

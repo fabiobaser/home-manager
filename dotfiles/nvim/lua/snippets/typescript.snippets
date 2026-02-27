@@ -1,0 +1,100 @@
+extends typescript_effect
+
+snippet ex "export const"
+  export const
+
+snippet arrow "Arrow Function"
+  ($1): $2 => {
+    $0
+  } 
+
+snippet exArrFunc = "Export Arrow Function"
+  export const ${TM_FILENAME_BASE} = ($1) => {
+    $0
+  }
+  
+snippet egen "Effect Generator"
+  Effect.gen(function* () {
+    $0
+  })
+
+snippet efn "Effect Fn"
+  Effect.fn(function* ($1) {
+    $0
+  })
+
+snippet eservice "Effect Service Definition"
+  export class ${TM_FILENAME_BASE} extends ServiceMap.Service<${TM_FILENAME_BASE}>()("${TM_FILENAME_BASE}",{
+    make: Effect.gen(function* () {
+      $0
+    })
+  }) {
+    static layer = Layer.effect(this, this.make).pipe()
+  }
+
+snippet pip "Effect Pipe"
+  pipe($0)
+
+
+snippet taggedError "Effect Tagged Error"
+  export class $1 extends Data.TaggedError('$1')<{$2}> {}
+
+snippet sliceDefinition "Redux Toolkit Slice"
+  import { createSlice } from '@reduxjs/toolkit'
+  import { Data } from 'effect'
+  
+  export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}State = { $0 }
+  export const ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}State = Data.case<${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}State>()
+  
+  const initialState = ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}State({})
+  
+  export const ${TM_FILENAME_BASE}Slice = createSlice({
+      name: '${TM_FILENAME_BASE}',
+      initialState,
+      reducers: {},
+  })
+  
+  export const {} = ${TM_FILENAME_BASE}Slice.actions
+  export const ${TM_FILENAME_BASE}Reducer = ${TM_FILENAME_BASE}Slice.reducer
+
+snippet simpleReducer "Simple Reducer"
+  $1: (state, action: PayloadAction<$2>) => ({
+    $0
+  }),
+
+
+
+snippet testSuite "Complete Vitest Testfile"
+  import { describe, expect, it } from 'vitest'
+
+  describe('$TM_FILENAME_BASE', () => {
+    it('$0', () => {
+      expect(true).toBeTruthy()
+    })
+  })
+
+
+snippet describe "Test Suite"
+  describe('$TM_FILENAME_BASE', () => {
+    it('$0', () => {
+      expect(true).toBeTruthy()
+    })
+  })
+
+
+snippet it "Test Case"
+  it('$1', () => {
+    $0
+    expect(true).toBeTruthy()
+  })
+snippet cf "const <filename>"
+  const $TM_FILENAME_BASE = $0
+
+snippet tf "type <filename>"
+  type $TM_FILENAME_BASE = $0
+
+snippet excf "export const <filename>"
+  export const $TM_FILENAME_BASE = $0
+
+snippet extf "export type <filename>"
+  export type $TM_FILENAME_BASE = $0

@@ -1,0 +1,36 @@
+
+snippet ess "Effect Schema Struct"
+  export const $1 = S.Struct({
+      $0
+  }).annotate({
+      identifier: '$1',
+  })
+  export type $1 = S.Schema.Type<typeof $1>
+
+
+snippet essf "Effect Schema Struct"
+  import { Schema as S } from 'effect'
+  
+  export const ${TM_FILENAME_BASE} = S.Struct({
+      $0
+  }).annotate({
+      identifier: '${TM_FILENAME_BASE}',
+  })
+  export type ${TM_FILENAME_BASE} = S.Schema.Type<typeof ${TM_FILENAME_BASE}>
+
+
+snippet esc "Effect Schema Class"
+  export class $1 extends S.Class<$1>('$1')({
+      $0
+  }) {}
+
+snippet escf "Effect Schema Class"
+  import { Schema as S } from 'effect'
+  
+  export class ${TM_FILENAME_BASE} extends S.Class<${TM_FILENAME_BASE}>('${TM_FILENAME_BASE}')({
+      $0
+  }) {}
+
+snippet tdo "Effect tagDefaultOmit"
+  _tag: S.tagDefaultOmit('$0'),
+

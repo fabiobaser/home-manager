@@ -14,15 +14,17 @@
     shell = pkgs.zsh;
   };
 
+  system.primaryUser = "fabiobaser";
+
   programs.zsh.enable = true;
 
   # Homebrew — für Casks und was nicht in nixpkgs ist
   homebrew = {
     enable = true;
     onActivation = {
-      autoUpdate  = false;
-      upgrade     = false;
-      # cleanup     = "zap";  # nicht deklarierte Casks werden entfernt
+      autoUpdate  = true;
+      upgrade     = true;
+      cleanup     = "zap";  # nicht deklarierte Casks werden entfernt
     };
     taps = [
     ];
@@ -33,6 +35,19 @@
       "raycast"
       "1password"
       "ghostty"
+      "arc"
+      "brooklyn"
+      "discord"
+      "espanso"
+      "eurkey"
+      "google-chrome"
+      "obs"
+      "tunnelblick"
+      "setapp"
+      "displaylink"
+      "kap"
+      "karabiner-elements"
+      "microsoft-teams"
     ];
     masApps = {
       # "App Name" = <App Store ID>;
