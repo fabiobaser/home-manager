@@ -27,6 +27,7 @@
       cleanup     = "zap";  # nicht deklarierte Casks werden entfernt
     };
     taps = [
+    "nikitabobko/tap"
     ];
     brews = [
       # brew-only formulas hier
@@ -48,6 +49,9 @@
       "kap"
       "karabiner-elements"
       "microsoft-teams"
+      "nikitabobko/tap/aerospace"
+      "elgato-stream-deck"
+      "spotify"
     ];
     masApps = {
       # "App Name" = <App Store ID>;
@@ -56,9 +60,31 @@
   };
 
   system.defaults = {
+    controlcenter = {
+      BatteryShowPercentage = true;
+    };
+    finder = {
+      CreateDesktop = false;
+    };
     dock = {
       autohide     = true;
       show-recents = false;
+      tilesize = 64;
+      largesize = 80;
+      magnification = true;
+      persistent-apps = [
+	"/Applications/Arc.app"
+	"/Applications/OBS.app"
+	"/Applications/Ghostty.app"
+      ];
+      persistent-others = [
+      { 
+      	folder = { path = "/Users/fabiobaser/Desktop/"; showas = "grid"; displayas = "folder"; arrangement = "date-modified"; };
+      }
+      { 
+      	folder = { path = "/Users/fabiobaser/Downloads/"; showas = "grid"; displayas = "folder"; arrangement = "date-modified"; };
+      }
+      ];
     };
   };
 
