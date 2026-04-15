@@ -1,5 +1,5 @@
 name: sorz
-root: ~/Developer/sorz/
+root: ~/Developer/sorz-worktrees/mobile
 
 # Optional tmux socket
 # socket_name: foo
@@ -56,6 +56,7 @@ windows:
   - Editor:
       panes:
         - nvim
-  - Vite:
+  - Expo:
+      root: ~/Developer/sorz-worktrees/mobile/apps/mobile/
       panes:
-        - vp run web#dev
+        - pnpm run start --clear

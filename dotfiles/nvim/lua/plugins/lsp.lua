@@ -19,6 +19,7 @@ return {
             }
             vim.lsp.enable('ts_go_ls') ]]
 
+
             vim.lsp.config['jsonls'] = {
                 settings = {
                     json = {
@@ -153,27 +154,25 @@ return {
         event = {"BufWritePre"},
         cmd = {"ConformInfo"},
         ---@type conform.setupOpts
-        opts = {
+	config = function()
+
+	require("conform").setup({
+
             notify_no_formatters = true,
-            format_on_save = {lsp_format = "never"},
+            format_on_save = {lsp_format = "fallback"},
             formatters_by_ft = {
                 lua = {"lua-format"},
-                javascript = {"biome", "biome-organize-imports"},
-                javascriptreact = {"biome", "biome-organize-imports"},
-                typescript = {"biomeFix"},
-                typescriptreact = {"biomeFix"},
-                json = {"biomeFix"}
+		javascript = { "oxfmt" },
+    		javascriptreact = { "oxfmt" },
+    		typescript = { "oxfmt"  },
+    		typescriptreact = { "oxfmt"  },
+    		json = { "oxfmt" },
+    		vue = { "oxfmt" },
             },
-            formatters = {
-                biomeFix = {
-                    stdin = true,
-                    command = "biome",
-                    args = {
-                        "check", "--write", "--stdin-file-path", "$FILENAME"
-                    }
-                }
-            }
-        }
+            formatters = { }
+	})
+
+	end
     }, {
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files

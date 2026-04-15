@@ -34,3 +34,11 @@ snippet escf "Effect Schema Class"
 snippet tdo "Effect tagDefaultOmit"
   _tag: S.tagDefaultOmit('$0'),
 
+snippet esos "Effect Schema Opaque Struct"
+  export class $1 extends S.Opaque<$1>()(
+  	S.Struct({
+      		$0
+  	}).annotate({
+      identifier: '$1',
+  })
+  ) { }

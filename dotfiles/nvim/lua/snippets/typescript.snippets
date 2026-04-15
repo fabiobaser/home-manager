@@ -98,3 +98,22 @@ snippet excf "export const <filename>"
 
 snippet extf "export type <filename>"
   export type $TM_FILENAME_BASE = $0
+
+snippet action "Effect Action"
+  export const $TM_FILENAME_BASE = (params: { $1 }) =>
+    Effect.gen(function* () {
+        yield* Effect.logInfo('$2')
+
+        const toast = yield* ToastService
+        const { api } = yield* ContentApiClient
+        const { invalidateMany } = yield* QueryService
+
+        const response = yield* api.$3
+
+        yield* toast.success(t => ({
+            title: t('action.<action-name>', { ns: '<namespace>' }),
+            description: t('action.<action-name>.success', { ns: '<namespace>' }),
+        }))
+
+        yield* invalidateMany([])
+    }).pipe(Effect.annotateLogs(params))

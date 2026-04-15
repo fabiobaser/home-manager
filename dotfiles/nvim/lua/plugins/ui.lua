@@ -111,7 +111,8 @@ return {
                     local utils = require("dropbar.utils")
 
                     return {
-                        utils.source.fallback({sources.lsp, sources.treesitter})
+			sources.path,
+                        utils.source.fallback({ sources.lsp, sources.treesitter})
                     }
                 end
             }

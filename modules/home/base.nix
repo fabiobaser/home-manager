@@ -2,7 +2,8 @@
 
 {
   home.username = "fabiobaser";
-  home.homeDirectory = if pkgs.stdenv.isDarwin
+  home.homeDirectory =
+    if pkgs.stdenv.isDarwin
     then "/Users/fabiobaser"
     else "/home/fabiobaser";
   home.stateVersion = "25.11";
@@ -23,6 +24,9 @@
     gnumake
     gcc
     cargo
+    # AI
+    opencode
+    tree-sitter
   ];
 
   home.file.".config/nvim" = {
@@ -33,55 +37,61 @@
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/tmuxinator";
   };
 
-  home.file = {
-  };
+  home.file = { };
 
   home.sessionVariables = {
     EDITOR = "nvim";
   };
 
   programs.zsh = {
-    enable                    = true;
+    enable = true;
     syntaxHighlighting.enable = true;
-    autosuggestion.enable     = true;
-    enableCompletion          = true;
+    autosuggestion.enable = true;
+    enableCompletion = true;
     history = {
-      size       = 99999;
+      size = 99999;
       saveNoDups = true;
-      append     = true;
+      append = true;
     };
     shellAliases = {
-      c         = "clear";
-      v         = "nvim";
+      c = "clear";
+      v = "nvim";
       # home-manager
-      hm        = "home-manager";
-      hms       = "home-manager switch";
-      hmc       = "nvim ~/.config/home-manager/home.nix";
+      hm = "home-manager";
+      hms = "home-manager switch";
+      hmc = "nvim ~/.config/home-manager/home.nix";
       # zsh
-      zshrc     = "nvim ~/.zshrc";
+      zshrc = "nvim ~/.zshrc";
       zshreload = "source ~/.zshrc";
       # eza
-      l         = "eza -T -L 1 --icons --group-directories-first -I .git";
-      la        = "eza -T -L 1 --icons -a --group-directories-first -I .git";
-      ll        = "eza -T -L 2 --icons --group-directories-first -I .git";
-      lla       = "eza -T -L 2 --icons -a --group-directories-first -I .git";
-      lll       = "eza -T -L 3 --icons --group-directories-first -I .git";
-      lg        = "lazygit";
+      l = "eza -T -L 1 --icons --group-directories-first -I .git";
+      la = "eza -T -L 1 --icons -a --group-directories-first -I .git";
+      ll = "eza -T -L 2 --icons --group-directories-first -I .git";
+      lla = "eza -T -L 2 --icons -a --group-directories-first -I .git";
+      lll = "eza -T -L 3 --icons --group-directories-first -I .git";
+      lg = "lazygit";
+      updateNix = "nix flake update --extra-experimental-features 'nix-command flakes' --flake ~/.config/home-manager";
+      reloadLinux = "home-manager switch --extra-experimental-features \"nix-command flakes\" --flake ~/.config/home-manager#linux";
     };
     initContent =
       let
         earlyInit = lib.mkOrder 500 "";
-        mainInit  = lib.mkOrder 1000 ''eval "$(fnm env --shell zsh)"'';
+        mainInit = lib.mkOrder 1000 ''
+                    	eval "$(fnm env --shell zsh)"
+                    	export PATH="/home/fabiobaser/.local/bin:$PATH"
+                    	eval "$(but completions zsh)"
+          		. "$HOME/.vite-plus/env"
+                    	'';
       in
       lib.mkMerge [ earlyInit mainInit ];
   };
 
   programs.tmux = {
-    enable      = true;
-    mouse       = true;
-    baseIndex   = 1;
-    escapeTime  = 10;
-    keyMode     = "vi";
+    enable = true;
+    mouse = true;
+    baseIndex = 1;
+    escapeTime = 10;
+    keyMode = "vi";
     tmuxinator.enable = true;
     plugins = with pkgs; [
       {
@@ -131,31 +141,31 @@
   };
 
   programs.starship = {
-    enable              = true;
+    enable = true;
     enableZshIntegration = true;
-    settings            = {};
+    settings = { };
   };
 
-  programs.zoxide.enable  = true;
+  programs.zoxide.enable = true;
   programs.lazygit.enable = true;
 
   programs.git = {
     enable = true;
     settings = {
       user = {
-        name  = "Fabio Baser";
+        name = "Fabio Baser";
         email = "git@fabiobaser.de";
       };
-      init.defaultBranch    = "main";
+      init.defaultBranch = "main";
       push = {
-        default          = "simple";
-        autoSetupRemote  = true;
-        followTags       = true;
+        default = "simple";
+        autoSetupRemote = true;
+        followTags = true;
       };
       fetch = {
-        prune     = true;
+        prune = true;
         pruneTags = true;
-        all       = true;
+        all = true;
       };
     };
   };
