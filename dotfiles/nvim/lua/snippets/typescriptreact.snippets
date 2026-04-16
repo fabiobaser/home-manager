@@ -22,15 +22,21 @@ snippet useNavigate "Router useNavigate-Hook"
 snippet useDispatch "Redux useAppDispatch-Hook"
   const dispatch = useAppDispatch($0)
 
-
 snippet rf "React Functional Component with Props"
-  export const ${TM_FILENAME_BASE} = (props: ${TM_FILENAME_BASE}Props) => {
+  const $1 = ($2) => {
       return (
           $0
       )
   }
 
-snippet rfp "React Funutctional Component with Props"
+snippet erf "React Functional Component with Props"
+  export const ${TM_FILENAME_BASE} = () => {
+      return (
+          $0
+      )
+  }
+
+snippet erfp "React Funutctional Component with Props"
   export type ${TM_FILENAME_BASE}Props = {
   
   }
@@ -42,9 +48,26 @@ snippet rfp "React Funutctional Component with Props"
   }
 
 
-snippet rd "React Component as Default"
+snippet edrf "React Component as Default"
   export default function $1() {
       return (
           $0
       )
   }
+
+snippet rcc "React Compound Component"
+  import { ReactNode } from 'react'
+  import { View, Image, Text } from 'react-native'
+  import { cn } from 'heroui-native'
+  
+  const ${TM_FILENAME_BASE}Provider = ({ children, className }: { children: ReactNode | ReactNode[], className?: string }) => {
+      return <View className={cn('', className)}>{children}</View>
+  }
+
+  const ${TM_FILENAME_BASE}Example = ({ text }: { text: string }) => {
+      return <Text>{text}</Text>
+  }
+  
+  export const ${TM_FILENAME_BASE} = Object.assign(${TM_FILENAME_BASE}Provider, {
+      Example: ${TM_FILENAME_BASE}Example
+  })
