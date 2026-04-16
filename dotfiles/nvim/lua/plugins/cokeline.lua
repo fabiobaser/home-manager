@@ -1,5 +1,7 @@
-return {{
+return {
+	{
 		"willothy/nvim-cokeline",
+		lazy = false,
 		config = function()
 			local is_picking_focus = require("cokeline.mappings").is_picking_focus
 			local is_picking_close = require("cokeline.mappings").is_picking_close
@@ -15,7 +17,7 @@ return {{
 					end,
 				},
 				sidebar = {
-					filetype = "neo-tree",
+					filetype = "snacks_picker_list",
 					components = {
 						{
 							text = "    Fabio's Neovim",
@@ -47,6 +49,21 @@ return {{
 					},
 					{
 						text = function(buffer)
+							local buffers = require("cokeline.buffers").get_valid_buffers()
+							local count = 0
+
+							for _, buf in ipairs(buffers) do
+								if buf.filename == buffer.filename then
+									count = count + 1
+								end
+							end
+
+							-- count will always be at least 1 (itself), so dupe = count > 1
+							if count > 1 then
+								local parent = vim.fn.fnamemodify(buffer.path, ":h:t")
+								return parent .. "/" .. buffer.filename
+							end
+
 							return buffer.filename
 						end,
 						style = "italic",
@@ -87,4 +104,5 @@ return {{
 				end,
 			},
 		},
-	}}
+	},
+}

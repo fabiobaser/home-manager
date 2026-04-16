@@ -1,19 +1,28 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+	lazy = false,
+	build = ":TSUpdate",
 	branch = "main",
         main = "nvim-treesitter",
         ---@module "nvim-treesitter"
-        opts = {
-            highlight = {enable = true},
-            folds = {enable = true},
-            ensure_installed = {
-                "typescript", "javascript", "tsx",
+	config = function() 
+	require('nvim-treesitter').install(
+	{
+	    	-- Web / React
+                "typescript", "javascript", "tsx", "css", "html", "json", "json5", "scss",
                 -- "comment", -- comments are slowing down TS bigtime, so disable for now
-                "css", "gitcommit", "gitignore", "graphql", "http", "nix",
-                "scss"
-            }
-        },
+
+		-- Neovim
+		"vim", "vimdoc", "lua",
+
+		-- Shell
+		"bash", "nix",
+
+		-- General
+                 "git_config", "gitcommit", "gitignore", "http", "markdown", "markdown_inline", "regex", "query", "yaml", "toml"
+            })
+	end,
 init = function()
   vim.api.nvim_create_autocmd('FileType', { 
     callback = function() 

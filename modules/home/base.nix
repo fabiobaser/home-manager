@@ -26,7 +26,6 @@
     cargo
     # AI
     opencode
-    tree-sitter
   ];
 
   home.file.".config/nvim" = {
@@ -41,7 +40,12 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
   };
+
+home.sessionPath = [
+  "$PNPM_HOME"
+];
 
   programs.zsh = {
     enable = true;
@@ -72,6 +76,7 @@
       lg = "lazygit";
       updateNix = "nix flake update --extra-experimental-features 'nix-command flakes' --flake ~/.config/home-manager";
       reloadLinux = "home-manager switch --extra-experimental-features \"nix-command flakes\" --flake ~/.config/home-manager#linux";
+      reloadMac = "sudo darwin-rebuild switch --flake ~/.config/home-manager#mac";
     };
     initContent =
       let
@@ -79,8 +84,6 @@
         mainInit = lib.mkOrder 1000 ''
                     	eval "$(fnm env --shell zsh)"
                     	export PATH="/home/fabiobaser/.local/bin:$PATH"
-                    	eval "$(but completions zsh)"
-          		. "$HOME/.vite-plus/env"
                     	'';
       in
       lib.mkMerge [ earlyInit mainInit ];
