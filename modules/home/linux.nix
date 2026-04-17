@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    wslu   # wslview, wslpath
     xclip
   ];
 

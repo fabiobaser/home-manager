@@ -26,6 +26,8 @@
     cargo
     # AI
     opencode
+    unzip
+    btop
   ];
 
   home.file.".config/nvim" = {
@@ -43,9 +45,9 @@
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
   };
 
-home.sessionPath = [
-  "$PNPM_HOME"
-];
+  home.sessionPath = [
+    "$PNPM_HOME"
+  ];
 
   programs.zsh = {
     enable = true;
@@ -82,9 +84,9 @@ home.sessionPath = [
       let
         earlyInit = lib.mkOrder 500 "";
         mainInit = lib.mkOrder 1000 ''
-                    	eval "$(fnm env --shell zsh)"
-                    	export PATH="/home/fabiobaser/.local/bin:$PATH"
-                    	'';
+          	eval "$(fnm env --shell zsh)"
+          	export PATH="/home/fabiobaser/.local/bin:$PATH"
+          	'';
       in
       lib.mkMerge [ earlyInit mainInit ];
   };

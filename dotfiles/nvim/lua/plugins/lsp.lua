@@ -8,15 +8,9 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			--[[ vim.lsp.config['ts_go_ls'] = {
-                cmd = {"pnpm", "tsgo", "--lsp", "--stdio"},
-                filetypes = {
-                    "javascript", "javascriptreact", "typescript",
-                    "typescriptreact"
-                },
-                root_markers = {'tsconfig.json', 'package.json', ".git"}
-            }
-            vim.lsp.enable('ts_go_ls') ]]
+			-- vim.lsp.config["oxlint"] = {
+			-- 	root_markers = { "oxlint.config.ts", "oxlint.config.js", ".oxlintrc.json" },
+			-- }
 
 			vim.lsp.config["jsonls"] = {
 				settings = {
@@ -84,49 +78,14 @@ return {
 			require("mason-lspconfig").setup({
 				handlers = {
 
-					-- Specific handler for vtsls
-					["vtsls"] = function()
-						local capabilities = vim.lsp.protocol.make_client_capabilities()
-						-- Get blink.cmp capabilities if available
-						local has_blink, blink = pcall(require, "blink.cmp")
-						if has_blink then
-							capabilities = blink.get_lsp_capabilities(capabilities)
-						end
-						-- Remove signature help capability
-						capabilities.textDocument.signatureHelp = nil
-
-						require("lspconfig").vtsls.setup({
-							capabilities = capabilities,
-							settings = {
-								typescript = {
-									inlayHints = {
-										parameterNames = { enabled = "none" },
-										parameterTypes = { enabled = false },
-										variableTypes = { enabled = false },
-										propertyDeclarationTypes = {
-											enabled = false,
-										},
-										functionLikeReturnTypes = {
-											enabled = false,
-										},
-										enumMemberValues = { enabled = false },
-									},
-								},
-								javascript = {
-									inlayHints = {
-										parameterNames = { enabled = "none" },
-										parameterTypes = { enabled = false },
-										variableTypes = { enabled = false },
-										propertyDeclarationTypes = {
-											enabled = false,
-										},
-										functionLikeReturnTypes = {
-											enabled = false,
-										},
-										enumMemberValues = { enabled = false },
-									},
-								},
-							},
+					["oxlint"] = function()
+						require("lspconfig").oxlint.setup({
+							root_dir = require("lspconfig.util").root_pattern(
+								"oxlint.config.ts",
+								"oxlint.config.json",
+								".oxlintrc.json",
+								"package.json"
+							),
 						})
 					end,
 				},
@@ -156,22 +115,27 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
-		---@type conform.setupOpts
 		config = function()
 			require("conform").setup({
-
 				notify_no_formatters = true,
 				format_on_save = { lsp_format = "fallback" },
 				formatters_by_ft = {
 					lua = { "lua-format" },
 					javascript = { "oxfmt" },
 					javascriptreact = { "oxfmt" },
-					typescript = { "oxfmt", "oxlint" },
-					typescriptreact = { "oxfmt", "oxlint" },
+					typescript = { "oxfmt" },
+					typescriptreact = { "oxfmt" },
 					json = { "oxfmt" },
 					vue = { "oxfmt" },
 				},
-				formatters = {},
+				formatters = {
+					oxlint_fix_danger = {
+						inherit = "oxlint",
+						args = { "--fix", "--fix-suggestions", "--fix-dangerously", "--quiet", "$FILENAME" },
+						stdin = false,
+						cwd = require("conform.util").root_file({ "pnpm-workspace.yaml" }),
+					},
+				},
 			})
 		end,
 	},

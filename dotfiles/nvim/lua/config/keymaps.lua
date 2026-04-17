@@ -226,3 +226,51 @@ Snacks.keymap.set("n", "<leader>EE", function()
         end
     })
 end, {desc = "Opens Scoped Explorers"})
+
+
+Snacks.keymap.set('n', '<leader>off', function() 
+	local cwd = vim.fs.root(0, 'pnpm-workspace.yaml')
+  	local file = vim.api.nvim_buf_get_name(0)
+
+	local bin = cwd .. "/node_modules/.bin/oxlint"
+
+	vim.cmd("silent write")
+
+	local result = vim.system({bin, "--fix",  "--threads=4", file}, {text = true, cwd = cwd}):wait()
+
+	vim.cmd("edit")
+
+	vim.notify("Formatted")
+end, {desc= "Oxlint Fix Dangerously"})
+
+
+Snacks.keymap.set('n', '<leader>ofs', function() 
+	local cwd = vim.fs.root(0, 'pnpm-workspace.yaml')
+  	local file = vim.api.nvim_buf_get_name(0)
+
+	local bin = cwd .. "/node_modules/.bin/oxlint"
+
+	vim.cmd("silent write")
+
+	local result = vim.system({bin, "--fix", "--fix-suggestions",  "--threads=4", file}, {text = true, cwd = cwd}):wait()
+
+	vim.cmd("edit")
+
+	vim.notify("Formatted")
+end, {desc= "Oxlint Fix Dangerously"})
+
+Snacks.keymap.set('n', '<leader>ofd', function() 
+	local cwd = vim.fs.root(0, 'pnpm-workspace.yaml')
+  	local file = vim.api.nvim_buf_get_name(0)
+
+	local bin = cwd .. "/node_modules/.bin/oxlint"
+
+	vim.cmd("silent write")
+
+	local result = vim.system({bin, "--fix", "--fix-suggestions", "--fix-dangerously", "--threads=4", file}, {text = true, cwd = cwd}):wait()
+
+	vim.cmd("edit")
+
+	vim.notify("Formatted")
+end, {desc= "Oxlint Fix Dangerously"})
+
