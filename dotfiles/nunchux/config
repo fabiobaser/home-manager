@@ -1,0 +1,25 @@
+[settings]
+popup_width = 90%
+
+[menu:system]
+desc = System tools
+
+[app:system/htop]
+cmd = htop
+
+[dirbrowser:configs]
+directory = ~/.config
+
+[app:lazygit]
+cmd = lazygit
+status = n=$(git status -s 2>/dev/null | wc -l | tr -d ' '); [[ $n -gt 0 ]] && echo "($n changed)"
+
+[app:notes]
+cmd = bash -c 'f=$(nearest notes.md) && exec nvim "$f" || { echo "No notes.md found"; sleep 2; }'
+width = 80
+height = 60
+status = f=$(nearest notes.md) && echo "(${f/#$HOME/\~}: $(lines "$f"), $(ago "$f"))"
+
+[taskrunner:npm]
+enabled = true
+icon = 📦

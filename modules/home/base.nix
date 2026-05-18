@@ -8,7 +8,18 @@
     else "/home/fabiobaser";
   home.stateVersion = "25.11";
 
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.android_sdk.accept_license = true;
+
   home.packages = with pkgs; [
+    jdk17
+    (androidenv.composeAndroidPackages {
+      cmdLineToolsVersion = "11.0";
+      platformVersions = [ "34" ];
+      buildToolsVersions = [ "34.0.0" ];
+      includeEmulator = true;
+      includeSystemImages = true;
+    }).androidsdk
     neovim
     gh
     bat
@@ -20,6 +31,7 @@
     bun
     pnpm
     fnm
+    fzf
     # Libs
     gnumake
     gcc
@@ -39,15 +51,22 @@
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/tmuxinator";
   };
 
-  home.file = { };
+  home.file.".config/nunchux" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/nunchux";
+  };
+
 
   home.sessionVariables = {
     EDITOR = "nvim";
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
+    JAVA_HOME = "${pkgs.jdk17}/lib/openjdk";
+    ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
   };
 
   home.sessionPath = [
     "$PNPM_HOME"
+    "${config.home.homeDirectory}/platform-tools"
   ];
 
   programs.zsh = {
@@ -80,13 +99,14 @@
       updateNix = "nix flake update --extra-experimental-features 'nix-command flakes' --flake ~/.config/home-manager";
       reloadLinux = "home-manager switch --extra-experimental-features \"nix-command flakes\" --flake ~/.config/home-manager#linux";
       reloadMac = "sudo darwin-rebuild switch --flake ~/.config/home-manager#mac";
+      # Tmux
+      twhm = "tmux new-window -n \"Home Manager\" -c ${config.home.homeDirectory}/.config/home-manager \"nvim\"";
     };
     initContent =
       let
         earlyInit = lib.mkOrder 500 "";
         mainInit = lib.mkOrder 1000 ''
           	eval "$(fnm env --shell zsh)"
-          	export PATH="/home/fabiobaser/.local/bin:$PATH"
           	'';
       in
       lib.mkMerge [ earlyInit mainInit ];
@@ -134,6 +154,11 @@
       }
     ];
     extraConfig = ''
+      set -g @plugin 'datamadsen/nunchux'
+      set -g @plugin 'lost-melody/tmux-command-palette'
+      set -g @plugin 'Ataraxy-Labs/opensessions'
+      set -g @plugin 'vndmp4/tmux-fzf-session-switch'
+
       bind-key r source-file ~/.config/tmux/.tmux.conf \; display "Reloaded Tmux Config"
       bind-key -T copy-mode-vi v   send-keys -X begin-selection
       bind-key -T copy-mode-vi C-v send-keys -X rectangle-selection
@@ -143,6 +168,11 @@
       set-option -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g  default-terminal "tmux-256color"
       set-option -ga terminal-features ",alacritty:usstyle"
+      set-option -g status-interval 5
+      set-option -g automatic-rename on
+      set-option -g automatic-rename-format '#{b:pane_current_path}'
+
+      run '~/.tmux/plugins/tpm/tpm'
     '';
   };
 
