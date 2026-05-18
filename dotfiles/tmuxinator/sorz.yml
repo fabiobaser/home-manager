@@ -1,6 +1,8 @@
 name: sorz
 root: ~/Developer/sorz/
 
+enable_pane_titles: false
+
 # Optional tmux socket
 # socket_name: foo
 
@@ -53,9 +55,17 @@ root: ~/Developer/sorz/
 # pane_title_format: " [ #T ] "
 
 windows:
-  - Editor:
+  - Mobile:
+      root: ~/Developer/sorz/apps/mobile/
       panes:
         - nvim
-  - Vite:
+  - PNPM:
+      root: ~/Developer/sorz/apps/mobile/
+      layout: "even-horizontal"
       panes:
-        - vp run web#dev
+        - pnpm expo start --lan
+        - pnpm -v
+  - Web:
+      root: ~/Developer/sorz/apps/mobile/
+      panes:
+        - nvim
