@@ -197,7 +197,7 @@ return {
 		},
 		keys = {
 			{
-				"<C-k>",
+				"<C-i>",
 				function()
 					require("blink.cmp").show()
 				end,
@@ -205,6 +205,5 @@ return {
 			},
 		},
 	},
-	{ "ThePrimeagen/refactoring.nvim", opts = {} },
 	{ "vuki656/package-info.nvim", opts = {} },
 }

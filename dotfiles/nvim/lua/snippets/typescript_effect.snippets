@@ -42,3 +42,41 @@ snippet esos "Effect Schema Opaque Struct"
       identifier: '$1',
   })
   ) { }
+
+snippet ofno "Option fromNullishOr"
+  O.fromNullishOr($0)
+
+snippet ofnom "Option fromNullishOr with pipe + map"
+  O.fromNullishOr($1).pipe(O.map(res => res$0))
+
+snippet om "Option map"
+  O.map($1 => $1$0)
+
+snippet ofm "Option flatMap"
+  O.flatMap($1 => $1$0)
+
+
+snippet ofmno "Option flatMap"
+  O.flatMapNullishOr($1 => $1$0)
+
+
+snippet ogoe "Option getOrElse"
+  O.getOrElse($1, () => $0)
+
+snippet eaf "Effect .atoms file"
+  import { ModalState } from '@alster26/lib';
+  import { Option as O, Array as A, String as Str, Schema as S, pipe } from 'effect'
+  
+  import { Atom } from 'effect/unstable/reactivity'
+  
+  export type ${TM_FILENAME_BASE}State = {
+     $0 
+  }
+  const state = Atom.make(ModalState.create<${TM_FILENAME_BASE}State>({  }))
+  
+  export const ${TM_FILENAME_BASE}Atoms = {
+      state,
+  }
+
+snippet useAtom "Effect useAtom"
+  const [$1, set${1/(.*)/${1:/capitalize}/}] = useAtom($1Atom)
