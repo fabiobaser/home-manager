@@ -52,6 +52,7 @@
       "nikitabobko/tap/aerospace"
       "elgato-stream-deck"
       "spotify"
+      "figma"
     ];
     masApps = {
       # "App Name" = <App Store ID>;

@@ -28,6 +28,7 @@
     opencode
     unzip
     btop
+    claude-code
   ];
 
   home.file.".config/nvim" = {
