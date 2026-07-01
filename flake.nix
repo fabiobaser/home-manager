@@ -11,9 +11,13 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {                                          # <-- add this
+      url = "github:ogulcancelik/herdr/v0.7.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, herdr, ... }:
     let
 
       flakeRoot = self;
@@ -24,7 +28,7 @@
           ./modules/home/base.nix
           ./modules/home/linux.nix
         ];
-	extraSpecialArgs = { inherit flakeRoot; };
+	extraSpecialArgs = { inherit flakeRoot herdr; };
       };
 
       mkDarwin = nix-darwin.lib.darwinSystem {
@@ -34,7 +38,7 @@
           home-manager.darwinModules.home-manager
           {
             home-manager = {
-	      extraSpecialArgs = { inherit flakeRoot; };
+	      extraSpecialArgs = { inherit flakeRoot herdr; };
               useGlobalPkgs   = true;
               useUserPackages = true;
               users.fabiobaser.imports = [

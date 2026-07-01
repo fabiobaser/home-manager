@@ -16,7 +16,8 @@ local function add_effect_import(name, alias, package)
 
 	if pkg_line_idx then
 		local line = lines[pkg_line_idx]
-		local before, imports, after = line:match("^(import%s*{)(.+)(}%s*from%s*['\"]" .. vim.pesc(pkg) .. "['\"].*)")
+		local before, imports, after = line:match("^(import%s*{)(.+)(}%s*from%s*['\"]" ..
+		vim.pesc(pkg) .. "['\"].*)")
 
 		if before and imports and after then
 			if imports:match("%f[%w]" .. name .. "%f[%W]") then
@@ -44,20 +45,21 @@ local function add_effect_import(name, alias, package)
 end
 
 local effect_imports = {
-	{ name = "Array", alias = "A", package = "effect" },
-	{ name = "Option", alias = "O", package = "effect" },
-	{ name = "String", alias = "Str", package = "effect" },
-	{ name = "Schema", alias = "S", package = "effect" },
-	{ name = "Effect", alias = nil, package = "effect" },
-	{ name = "pipe", alias = nil, package = "effect" },
-	{ name = "flow", alias = nil, package = "effect" },
-	{ name = "Data", alias = nil, package = "effect" },
-	{ name = "DateTime", alias = nil, package = "effect" },
-	{ name = "Duration", alias = nil, package = "effect" },
-	{ name = "HashMap", alias = nil, package = "effect" },
-	{ name = "HttpApi", alias = nil, package = "effect/unstable/httpapi" },
-	{ name = "HttpApiGroup", alias = nil, package = "effect/unstable/httpapi" },
-	{ name = "HttpApiEndpoint", alias = nil, package = "effect/unstable/httpapi" },
+	{ name = "Option",          alias = "O",   package = "effect" },
+	{ name = "Array",           alias = "A",   package = "effect" },
+	{ name = "String",          alias = "Str", package = "effect" },
+	{ name = "Number",          alias = "Num", package = "effect" },
+	{ name = "Schema",          alias = "S",   package = "effect" },
+	{ name = "Effect",          alias = nil,   package = "effect" },
+	{ name = "pipe",            alias = nil,   package = "effect" },
+	{ name = "flow",            alias = nil,   package = "effect" },
+	{ name = "Data",            alias = nil,   package = "effect" },
+	{ name = "DateTime",        alias = nil,   package = "effect" },
+	{ name = "Duration",        alias = nil,   package = "effect" },
+	{ name = "HashMap",         alias = nil,   package = "effect" },
+	{ name = "HttpApi",         alias = nil,   package = "effect/unstable/httpapi" },
+	{ name = "HttpApiGroup",    alias = nil,   package = "effect/unstable/httpapi" },
+	{ name = "HttpApiEndpoint", alias = nil,   package = "effect/unstable/httpapi" },
 }
 
 local function pick_effect_import()
@@ -93,8 +95,8 @@ local function pick_effect_import()
 			local name_col = string.format("%-20s", item.name)
 			local alias_col = string.format("%-10s", item.alias or "")
 			return {
-				{ name_col, "SnacksPickerLabel" },
-				{ alias_col, "Comment" },
+				{ name_col,     "SnacksPickerLabel" },
+				{ alias_col,    "Comment" },
 				{ item.package, "Number" },
 			}
 		end,

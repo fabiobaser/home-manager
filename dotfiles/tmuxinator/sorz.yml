@@ -66,6 +66,6 @@ windows:
         - pnpm expo start --lan
         - pnpm -v
   - Web:
-      root: ~/Developer/sorz/apps/mobile/
+      root: ~/Developer/sorz/apps/web/
       panes:
         - nvim

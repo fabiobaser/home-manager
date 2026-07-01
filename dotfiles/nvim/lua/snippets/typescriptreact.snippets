@@ -55,13 +55,31 @@ snippet edrf "React Component as Default"
       )
   }
 
+
 snippet rcc "React Compound Component"
-  import { ReactNode } from 'react'
+  import { createContext, ReactNode, useContext } from 'react'
   import { View, Image, Text } from 'react-native'
   import { cn } from 'heroui-native'
+
+
+  type ${TM_FILENAME_BASE}Context = {
+
+  }
+
+  const ${TM_FILENAME_BASE}Context = createContext<${TM_FILENAME_BASE}Context | null>(null)
+  export function use${TM_FILENAME_BASE}() {
+      const ctx = useContext(${TM_FILENAME_BASE}Context)
+      if (!ctx) throw new Error('useActivityFeed must be used within ${TM_FILENAME_BASE}Provider')
+      return ctx
+  }
   
   const ${TM_FILENAME_BASE}Provider = ({ children, className }: { children: ReactNode | ReactNode[], className?: string }) => {
-      return <View className={cn('', className)}>{children}</View>
+      return ( 
+          <${TM_FILENAME_BASE}Context.Provider value={{}}>
+              <View className={cn('', className)}>{children}</View>
+          </${TM_FILENAME_BASE}Context.Provider>
+      )
+
   }
 
   const ${TM_FILENAME_BASE}Example = ({ text }: { text: string }) => {

@@ -4,6 +4,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Disable Swap-Files everywhere
+vim.opt.swapfile = false
+
 vim.opt.foldenable = false
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal

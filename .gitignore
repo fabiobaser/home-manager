@@ -1,0 +1,4 @@
+dotfiles/herdr/*.log
+dotfiles/herdr/*.sock
+dotfiles/herdr/sessions.json
+dotfiles/herdr/plugins/**/*

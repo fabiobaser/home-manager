@@ -1,4 +1,4 @@
-{ config, pkgs, lib, flakeRoot, ... }:
+{ config, pkgs, lib, flakeRoot,herdr, ... }:
 
 {
   home.username = "fabiobaser";
@@ -12,6 +12,7 @@
   nixpkgs.config.android_sdk.accept_license = true;
 
   home.packages = with pkgs; [
+    herdr.packages.${pkgs.system}.default
     jdk17
     (androidenv.composeAndroidPackages {
       cmdLineToolsVersion = "11.0";
@@ -24,6 +25,7 @@
     gh
     bat
     eza
+    jq
     ripgrep
     lazygit
     starship
@@ -40,7 +42,9 @@
     opencode
     unzip
     btop
+    uv
     claude-code
+    pi-coding-agent
   ];
 
   home.file.".config/nvim" = {
@@ -53,6 +57,10 @@
 
   home.file.".config/nunchux" = {
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/nunchux";
+  };
+
+  home.file.".config/herdr" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/herdr";
   };
 
 
@@ -164,6 +172,7 @@
       bind-key -T copy-mode-vi C-v send-keys -X rectangle-selection
       bind-key -T copy-mode-vi y   send-keys -X copy-selection-and-cancel
 
+      set -g extended-keys on
       set-option -sa terminal-features ',alacritty:RGB'
       set-option -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g  default-terminal "tmux-256color"

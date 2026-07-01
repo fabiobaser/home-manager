@@ -15,6 +15,7 @@ require("config.lazy")
 require("config.keymaps")
 require("config.registers")
 require("custom.effectImports")
+require("custom.oxlintQf")
 
 vim.api.nvim_command("highlight SnacksIndent guifg=#493d64")
 

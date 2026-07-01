@@ -1,0 +1,27 @@
+onboarding = false
+[ui.toast]
+delivery = "herdr"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+
+agent_panel_sort = "spaces"
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"

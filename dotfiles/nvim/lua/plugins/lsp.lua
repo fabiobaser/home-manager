@@ -117,8 +117,9 @@ return {
 		cmd = { "ConformInfo" },
 		config = function()
 			require("conform").setup({
+				log_level = vim.log.levels.DEBUG,
 				notify_no_formatters = true,
-				format_on_save = { lsp_format = "fallback" },
+				format_on_save = { lsp_format = "never" },
 				formatters_by_ft = {
 					lua = { "lua-format" },
 					javascript = { "oxfmt" },
@@ -129,6 +130,12 @@ return {
 					vue = { "oxfmt" },
 				},
 				formatters = {
+					oxfmt = {
+						cwd = require("conform.util").root_file({
+                                                 "oxfmt.config.ts",
+      						}),
+						args= { "--stdin-filepath", "$FILENAME"}
+					},
 					oxlint_fix_danger = {
 						inherit = "oxlint",
 						args = { "--fix", "--fix-suggestions", "--fix-dangerously", "--quiet", "$FILENAME" },
