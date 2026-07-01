@@ -53,6 +53,8 @@
       "elgato-stream-deck"
       "spotify"
       "figma"
+      "zen"
+      "obsidian"
     ];
     masApps = {
       # "App Name" = <App Store ID>;
