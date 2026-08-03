@@ -213,4 +213,7 @@ return {
 		},
 	},
 	{ "vuki656/package-info.nvim", opts = {} },
-}
+	{
+  "davidmh/mdx.nvim",
+  dependencies = {"nvim-treesitter/nvim-treesitter"}
+}}
