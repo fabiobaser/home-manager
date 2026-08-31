@@ -105,54 +105,58 @@ local special_finder_picker = function()
         finder = function()
             return {
                 {
-                    idx = 1,
-                    text = "in Modules",
-                    icon = "",
+                    text = "Web",
+                    icon = "apps/web",
                     onSelect = function()
                         Snacks.picker.files({
-                            cwd = "~/Developer/collector-frontend/apps/web/src/modules/"
+                            cwd = "~/Developer/sorz/apps/web/"
+                        })
+                    end
+                },{
+                    text = "Mobile",
+                    icon = "apps/mobile",
+                    onSelect = function()
+                        Snacks.picker.files({
+                            cwd = "~/Developer/sorz/apps/mobile/"
                         })
                     end
                 }, {
-                    idx = 2,
-                    text = "API Schema",
-                    icon = "",
+                    text = "Schemas",
+                    icon = "packages/api",
                     onSelect = function()
                         Snacks.picker.files({
-                            cwd = "~/Developer/collector-frontend/packages/api/src/schemas/"
+                            cwd = "~/Developer/sorz/packages/api/src/schemas/"
                         })
                     end
                 }, {
-                    idx = 3,
-                    text = "API Contract",
-                    icon = "",
+                    text = "Contracts",
+                    icon = "packages/api",
                     onSelect = function()
                         Snacks.picker.files({
-                            cwd = "~/Developer/collector-frontend/packages/api/src/contracts/"
+                            cwd = "~/Developer/sorz/packages/api/src/contracts/"
                         })
                     end
                 }, {
-                    idx = 4,
-                    text = "API Service",
-                    icon = "",
+                    text = "Packages",
+                    icon = "packages/*",
                     onSelect = function()
                         Snacks.picker.files({
-                            cwd = "~/Developer/collector-frontend/apps/web/src/features/api/services/"
+                            cwd = "~/Developer/sorz/packages/"
                         })
                     end
                 }
-
             }
         end,
         format = function(item, _)
-            local file = item.text
+            local file = string.format("%-20s", item.text)
             local ret = {}
             local a = Snacks.picker.util.align
-            ret[#ret + 1] = {a(item.icon, 3)}
-            ret[#ret + 1] = {" "}
-            ret[#ret + 1] = {a(file, 20)}
 
-            return ret
+			return {
+			        {file, "SnacksPickerLabel"},
+				{ item.icon, "Number" }
+			}
+
         end,
         layout = {
             layout = {

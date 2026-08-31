@@ -1,0 +1,38 @@
+snippet adr "Architecture Decision Record"
+	# ADR-`matchstr(expand('%:t:r'), '^\d\+')`: `join(map(split(substitute(expand('%:t:r'), '^\d\+-', '', ''), '-'), 'toupper(v:val[0]) . v:val[1:]'), ' ')`
+
+	**Status:** ${1:Accepted}
+	**Date:** `strftime('%Y-%m-%d')`
+
+	## Context
+	${2:What's the situation? What forces are at play? Why does this need a decision?}
+
+	## Decision
+	${3:What we're doing. One clear statement.}
+
+	## Consequences
+	${0:- What gets better
+	- What gets worse / what we're accepting as a tradeoff
+	- Anything to revisit later}
+
+snippet prd "Product Requirements Document"
+	# PRD-`matchstr(expand('%:t:r'), '^\d\+')`: `join(map(split(substitute(expand('%:t:r'), '^\d\+-', '', ''), '-'), 'toupper(v:val[0]) . v:val[1:]'), ' ')`
+
+	**Status:** ${1:Draft}
+	**Owner:** ${2:Fabio}
+	**Date:** `strftime('%Y-%m-%d')`
+
+	## Problem
+	${3:Who has this problem and why it matters. One paragraph, no solution yet.}
+
+	## Goal
+	${4:What success looks like. Measurable if possible.}
+
+	## Non-Goals
+	${5:What we're explicitly not doing.}
+
+	## Solution
+	${6:The gist of what we're building. Keep it high-level.}
+
+	## Open Questions
+	${0:- }
