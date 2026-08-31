@@ -4,6 +4,7 @@ delivery = "herdr"
 
 [ui]
 show_agent_labels_on_pane_borders = true
+host_cursor = "native"
 
 agent_panel_sort = "spaces"
 [[keys.command]]
