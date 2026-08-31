@@ -3,7 +3,7 @@
 {
   home.username = "fabiobaser";
   home.homeDirectory =
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.hostPlatform.isDarwin
     then "/Users/fabiobaser"
     else "/home/fabiobaser";
   home.stateVersion = "25.11";
@@ -12,15 +12,15 @@
   nixpkgs.config.android_sdk.accept_license = true;
 
   home.packages = with pkgs; [
-    herdr.packages.${pkgs.system}.default
-    jdk17
+    herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
+    /* jdk17
     (androidenv.composeAndroidPackages {
       cmdLineToolsVersion = "11.0";
       platformVersions = [ "34" ];
       buildToolsVersions = [ "34.0.0" ];
       includeEmulator = true;
       includeSystemImages = true;
-    }).androidsdk
+    }).androidsdk */
     neovim
     gh
     bat
@@ -43,8 +43,9 @@
     unzip
     btop
     uv
-    claude-code
+    # claude-code
     pi-coding-agent
+    atuin
   ];
 
   home.file.".config/nvim" = {

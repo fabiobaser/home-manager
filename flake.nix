@@ -11,9 +11,12 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    herdr = {                                          # <-- add this
-      url = "github:ogulcancelik/herdr/v0.7.1";
+    herdr = {
+      url = "github:ogulcancelik/herdr/v0.8.0";
       inputs.nixpkgs.follows = "nixpkgs";
+      # herdr pins a rust-overlay older than the `stdenv.is*` deprecation fix;
+      # override it with the upstream fix commit to silence evaluation warnings.
+      inputs.rust-overlay.url = "github:oxalica/rust-overlay/892c035d7c2ff75acd5da10424a47ab454e1f3dc";
     };
   };
 
