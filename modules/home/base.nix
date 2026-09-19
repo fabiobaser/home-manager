@@ -9,18 +9,17 @@
   home.stateVersion = "25.11";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.android_sdk.accept_license = true;
 
   home.packages = with pkgs; [
-    herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
-    /* jdk17
-    (androidenv.composeAndroidPackages {
-      cmdLineToolsVersion = "11.0";
-      platformVersions = [ "34" ];
-      buildToolsVersions = [ "34.0.0" ];
-      includeEmulator = true;
-      includeSystemImages = true;
-    }).androidsdk */
+    herdr.packages.${pkgs.system}.default
+    # jdk17
+    # (androidenv.composeAndroidPackages {
+    #   cmdLineToolsVersion = "11.0";
+    #   platformVersions = [ "34" ];
+    #   buildToolsVersions = [ "34.0.0" ];
+    #   includeEmulator = true;
+    #   includeSystemImages = true;
+    # }).androidsdk
     neovim
     gh
     bat
@@ -43,9 +42,9 @@
     unzip
     btop
     uv
-    # claude-code
     pi-coding-agent
-    atuin
+    sonarqube-cli
+    sonar-scanner-cli
   ];
 
   home.file.".config/nvim" = {
@@ -116,6 +115,7 @@
         earlyInit = lib.mkOrder 500 "";
         mainInit = lib.mkOrder 1000 ''
           	eval "$(fnm env --shell zsh)"
+		source $HOME/.atuin/bin/env
           	'';
       in
       lib.mkMerge [ earlyInit mainInit ];

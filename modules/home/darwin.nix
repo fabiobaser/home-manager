@@ -4,6 +4,7 @@
   # macOS-only Pakete die in nixpkgs verfügbar sind
   home.packages = with pkgs; [
     mas  # Mac App Store CLI
+    yabai
   ];
 
   home.sessionVariables = {

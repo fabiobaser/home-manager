@@ -27,7 +27,7 @@
       cleanup     = "zap";  # nicht deklarierte Casks werden entfernt
     };
     taps = [
-    "nikitabobko/tap"
+	"nikitabobko/tap"
     ];
     brews = [
       # brew-only formulas hier
@@ -49,12 +49,12 @@
       "kap"
       "karabiner-elements"
       "microsoft-teams"
-      "nikitabobko/tap/aerospace"
       "elgato-stream-deck"
       "spotify"
       "figma"
       "zen"
       "obsidian"
+      "aerospace"
     ];
     masApps = {
       # "App Name" = <App Store ID>;

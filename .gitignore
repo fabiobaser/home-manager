@@ -4,3 +4,6 @@ dotfiles/herdr/sessions.json
 dotfiles/herdr/plugins/**/*
 /dotfiles/herdr/session.json
 /.omo/run-continuation
+
+.omo/
+.codegraph
