@@ -8,3 +8,6 @@ dotfiles/herdr/plugins/**/*
 .omo/
 .codegraph
 /dotfiles/herdr/session-snapshots
+/dotfiles/herdr/release-notes.json
+/dotfiles/nvim/lazy-lock.json
+/dotfiles/herdr/release-notes.json
