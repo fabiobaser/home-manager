@@ -38,13 +38,15 @@
     gcc
     cargo
     # AI
-    opencode
+    # opencode
     unzip
     btop
     uv
     pi-coding-agent
     sonarqube-cli
     sonar-scanner-cli
+    # claude-code
+    _1password-cli
   ];
 
   home.file.".config/nvim" = {
@@ -75,6 +77,8 @@
   home.sessionPath = [
     "$PNPM_HOME"
     "${config.home.homeDirectory}/platform-tools"
+    "$HOME/.local/share/nvim/mason/bin"
+    "$HOME/.opencode/bin"
   ];
 
   programs.zsh = {
@@ -108,14 +112,17 @@
       reloadLinux = "home-manager switch --extra-experimental-features \"nix-command flakes\" --flake ~/.config/home-manager#linux";
       reloadMac = "sudo darwin-rebuild switch --flake ~/.config/home-manager#mac";
       # Tmux
-      twhm = "tmux new-window -n \"Home Manager\" -c ${config.home.homeDirectory}/.config/home-manager \"nvim\"";
+			# op = "/mnt/c/Users/fbase/AppData/Local/Microsoft/WinGet/Packages/AgileBits.1Password.CLI_Microsoft.Winget.Source_8wekyb3d8bbwe/op.exe";
     };
     initContent =
       let
         earlyInit = lib.mkOrder 500 "";
         mainInit = lib.mkOrder 1000 ''
           	eval "$(fnm env --shell zsh)"
-		source $HOME/.atuin/bin/env
+            source $HOME/.atuin/bin/env
+                for _f in ${config.home.homeDirectory}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
+                  source $_f; break
+                done
           	'';
       in
       lib.mkMerge [ earlyInit mainInit ];

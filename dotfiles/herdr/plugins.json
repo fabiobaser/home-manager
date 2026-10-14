@@ -1,5 +1,375 @@
 [
   {
+    "plugin_id": "chmarax.herdr-nvim",
+    "name": "herdr-nvim",
+    "version": "1.2.0",
+    "min_herdr_version": "0.7.5",
+    "description": "Full-height nvim sidebar with agent annotations: toggle with one key, comment code, send to any agent.",
+    "manifest_path": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/chmarax.herdr-nvim-178624809c23/herdr-plugin.toml",
+    "plugin_root": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/chmarax.herdr-nvim-178624809c23",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux",
+      "windows"
+    ],
+    "build": [
+      {
+        "platforms": [
+          "macos",
+          "linux"
+        ],
+        "command": [
+          "bash",
+          "herdr/install.sh"
+        ]
+      },
+      {
+        "platforms": [
+          "windows"
+        ],
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "herdr/install.ps1"
+        ]
+      }
+    ],
+    "startup": [
+      {
+        "command": [
+          "bin/herdr-nvim",
+          "daemon-gc"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "open-link",
+        "title": "nvim sidebar: open clicked file",
+        "command": [
+          "bin/herdr-nvim",
+          "open-link"
+        ]
+      },
+      {
+        "id": "pick-file",
+        "title": "nvim sidebar: open file from agent output",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "bin/herdr-nvim",
+          "pick-file"
+        ]
+      },
+      {
+        "id": "toggle",
+        "title": "nvim sidebar: toggle",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "bin/herdr-nvim",
+          "toggle"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "tab.closed",
+        "command": [
+          "bin/herdr-nvim",
+          "on-event"
+        ]
+      },
+      {
+        "on": "workspace.closed",
+        "command": [
+          "bin/herdr-nvim",
+          "on-event"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "picker",
+        "title": "open file",
+        "placement": "popup",
+        "command": [
+          "bin/herdr-nvim",
+          "picker"
+        ]
+      },
+      {
+        "id": "sidebar",
+        "title": "nvim sidebar",
+        "placement": "split",
+        "command": [
+          "bin/herdr-nvim",
+          "sidebar"
+        ]
+      }
+    ],
+    "link_handlers": [
+      {
+        "id": "file-path",
+        "title": "Open in nvim sidebar",
+        "pattern": "^(?:~|[A-Za-z]:)?[\\w.@/()\\[\\]\\\\+-]+[\\\\/][\\w.@()\\[\\]\\\\+-]+\\.[A-Za-z]\\w*(?::\\d+){0,2}$",
+        "action": "open-link"
+      },
+      {
+        "id": "file-url",
+        "title": "Open in nvim sidebar",
+        "pattern": "^file://",
+        "action": "open-link"
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "ChmaraX",
+      "repo": "herdr-nvim",
+      "resolved_commit": "e2ec32e7bbbb1eefd64363414b5806f84eedd6bc",
+      "managed_path": "/home/fabiobaser/.config/herdr/plugins/github/chmarax.herdr-nvim-178624809c23",
+      "installed_unix_ms": 1791731122067
+    }
+  },
+  {
+    "plugin_id": "herdr-automatic-rename",
+    "name": "Herdr Automatic Rename",
+    "version": "0.13.0",
+    "min_herdr_version": "0.7.1",
+    "description": "Auto-name tabs after where the work is and what is running there -- the directory, the branch, the machine reached over ssh, then the program or the task an agent reports -- and/or prefix workspaces, tabs, and agents with their 1-9 jump-key number. Each feature toggles via config.sh.",
+    "manifest_path": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35/herdr-plugin.toml",
+    "plugin_root": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "startup": [
+      {
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "startup"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "clear",
+        "title": "Herdr Automatic Rename: strip all number prefixes",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "--clear"
+        ]
+      },
+      {
+        "id": "doctor",
+        "title": "Herdr Automatic Rename: explain this tab's name",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "doctor"
+        ]
+      },
+      {
+        "id": "reset",
+        "title": "Reset tab to automatic naming",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "reset"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "pane.agent_detected",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.agent_detected"
+        ]
+      },
+      {
+        "on": "pane.agent_status_changed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.agent_status_changed"
+        ]
+      },
+      {
+        "on": "pane.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.closed"
+        ]
+      },
+      {
+        "on": "pane.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.created"
+        ]
+      },
+      {
+        "on": "pane.exited",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.exited"
+        ]
+      },
+      {
+        "on": "pane.focused",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.focused"
+        ]
+      },
+      {
+        "on": "pane.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.moved"
+        ]
+      },
+      {
+        "on": "tab.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.closed"
+        ]
+      },
+      {
+        "on": "tab.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.created"
+        ]
+      },
+      {
+        "on": "tab.focused",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.focused"
+        ]
+      },
+      {
+        "on": "tab.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.moved"
+        ]
+      },
+      {
+        "on": "tab.renamed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.renamed"
+        ]
+      },
+      {
+        "on": "workspace.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.closed"
+        ]
+      },
+      {
+        "on": "workspace.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.created"
+        ]
+      },
+      {
+        "on": "workspace.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.moved"
+        ]
+      },
+      {
+        "on": "workspace.renamed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.renamed"
+        ]
+      },
+      {
+        "on": "workspace.reordered",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.reordered"
+        ]
+      },
+      {
+        "on": "worktree.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.created"
+        ]
+      },
+      {
+        "on": "worktree.opened",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.opened"
+        ]
+      },
+      {
+        "on": "worktree.removed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.removed"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "qu8n",
+      "repo": "herdr-automatic-rename",
+      "resolved_commit": "b90c4086854080fd0dbde63c19667e38d55df5af",
+      "managed_path": "/home/fabiobaser/.config/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35",
+      "installed_unix_ms": 1791732004973
+    }
+  },
+  {
     "plugin_id": "herdr-splits",
     "name": "Herdr Splits",
     "version": "0.1.0",
@@ -117,6 +487,190 @@
       "resolved_commit": "9ef4729142f3147855ece87bd77230e0a45d7e6f",
       "managed_path": "/home/fabiobaser/.config/herdr/plugins/github/herdr-splits-d880c4924f2b",
       "installed_unix_ms": 1782900173808
+    }
+  },
+  {
+    "plugin_id": "hhdebb.herdr-radar",
+    "name": "Herdr Radar",
+    "version": "1.4.4",
+    "min_herdr_version": "0.9.0",
+    "description": "Who's working, who's waiting on you — grouped by project, each agent in its vendor's logo and colour. Worktrees nest under their repo, rows order by activity, idle sessions fade. Light and dark.",
+    "manifest_path": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/hhdebb.herdr-radar-afabda667cbe/herdr-plugin.toml",
+    "plugin_root": "/home/fabiobaser/.config/home-manager/dotfiles/herdr/plugins/github/hhdebb.herdr-radar-afabda667cbe",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "build": [
+      {
+        "command": [
+          "node",
+          "bin/setup.js"
+        ]
+      }
+    ],
+    "startup": [
+      {
+        "command": [
+          "node",
+          "bin/agent-icons.js"
+        ]
+      },
+      {
+        "command": [
+          "node",
+          "bin/agent-state.js"
+        ]
+      },
+      {
+        "command": [
+          "node",
+          "bin/agent-view.js",
+          "--reapply"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "configure",
+        "title": "Configure: install the sidebar, tab-bar and theme blocks",
+        "description": "Write (or repair) the three managed blocks in Herdr's config.toml and reload.",
+        "command": [
+          "node",
+          "bin/configure.js",
+          "--apply",
+          "--reload"
+        ]
+      },
+      {
+        "id": "install-font",
+        "title": "Font: install for this user and map codepoints in the terminal",
+        "description": "Copy the icon font into your user font directory (no admin needed) and write the codepoint map into ghostty/kitty configs that exist; other terminals get instructions in the log.",
+        "command": [
+          "node",
+          "bin/install-font.js"
+        ]
+      },
+      {
+        "id": "refresh",
+        "title": "Agent icons: refresh",
+        "description": "Reapply icon variants to all current panes.",
+        "command": [
+          "node",
+          "bin/agent-icons.js"
+        ]
+      },
+      {
+        "id": "settings",
+        "title": "Settings",
+        "description": "Open the settings popup.",
+        "command": [
+          "node",
+          "bin/settings.js",
+          "--open"
+        ]
+      },
+      {
+        "id": "state-start",
+        "title": "Agent state: start animator",
+        "description": "Start the lifecycle-state glyph animator.",
+        "command": [
+          "node",
+          "bin/agent-state.js"
+        ]
+      },
+      {
+        "id": "state-stop",
+        "title": "Agent state: stop animator",
+        "description": "Stop the lifecycle-state glyph animator and clear its marks. Titles and sort keys stay so the list stays readable; unconfigure clears everything.",
+        "command": [
+          "node",
+          "bin/agent-state.js",
+          "--stop"
+        ]
+      },
+      {
+        "id": "unconfigure",
+        "title": "Configure: remove the managed blocks",
+        "description": "Stop the daemon, clear every token it wrote, remove the three managed blocks from Herdr's config.toml and reload. Do this before uninstalling.",
+        "command": [
+          "node",
+          "bin/configure.js",
+          "--uninstall",
+          "--reload"
+        ]
+      },
+      {
+        "id": "uninstall-font",
+        "title": "Font: remove",
+        "description": "Remove the installed icon font and the terminal codepoint map this plugin wrote.",
+        "command": [
+          "node",
+          "bin/install-font.js",
+          "--uninstall"
+        ]
+      },
+      {
+        "id": "view-flip",
+        "title": "Agents: active <-> recent",
+        "description": "Flip between grouped-by-activity and flat-by-activity without leaving the plugin's order.",
+        "command": [
+          "node",
+          "bin/agent-view.js",
+          "--flip"
+        ]
+      },
+      {
+        "id": "view-native",
+        "title": "Agents: Herdr's panel <-> ours",
+        "description": "Toggle the whole Agents panel — order and row colours — between Herdr's own and the plugin's.",
+        "command": [
+          "node",
+          "bin/agent-view.js",
+          "--native"
+        ]
+      },
+      {
+        "id": "view-toggle",
+        "title": "Agents: cycle order (active / recent / off)",
+        "description": "Cycle the Agents panel: grouped by activity, flat by activity, or the panel's own order.",
+        "command": [
+          "node",
+          "bin/agent-view.js"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "pane.agent_detected",
+        "command": [
+          "node",
+          "bin/agent-state.js"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "settings",
+        "title": "herdr-radar settings",
+        "placement": "popup",
+        "width": 84,
+        "height": "90%",
+        "command": [
+          "node",
+          "bin/settings.js"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "hhdebb",
+      "repo": "herdr-radar",
+      "resolved_commit": "dd42772da4b8b9e18660d653d08149c7da1d2964",
+      "managed_path": "/home/fabiobaser/.config/herdr/plugins/github/hhdebb.herdr-radar-afabda667cbe",
+      "installed_unix_ms": 1791736702896
     }
   }
 ]

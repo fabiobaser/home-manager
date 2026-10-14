@@ -122,12 +122,12 @@ return {
 				format_on_save = { lsp_format = "never" },
 				formatters_by_ft = {
 					lua = { "lua-format" },
-					javascript = { "oxfmt" },
-					javascriptreact = { "oxfmt" },
-					typescript = { "oxfmt" },
-					typescriptreact = { "oxfmt" },
-					json = { "oxfmt" },
-					vue = { "oxfmt" },
+					javascript = { "biome-check", "biome-organize-imports" },
+					javascriptreact = { "biome-check", "biome-organize-imports" },
+					typescript = { "biome-check", "biome-organize-imports" },
+					typescriptreact = { "biome-check", "biome-organize-imports" },
+					json = { "biome" },
+					vue = { "biome" },
 				},
 				formatters = {
 					oxfmt = {
