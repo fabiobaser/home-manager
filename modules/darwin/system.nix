@@ -27,10 +27,12 @@
       cleanup     = "zap";  # nicht deklarierte Casks werden entfernt
     };
     taps = [
-	"nikitabobko/tap"
+      "anomalyco/tap"
+      "nikitabobko/tap"
     ];
     brews = [
       # brew-only formulas hier
+      "anomalyco/tap/opencode-v2"  # opencode v2, nixpkgs version hinkt hinterher
     ];
     casks = [
       "raycast"
