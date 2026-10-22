@@ -42,11 +42,11 @@
     unzip
     btop
     uv
-    pi-coding-agent
     sonarqube-cli
     sonar-scanner-cli
     # claude-code
     _1password-cli
+    atuin
   ];
 
   home.file.".config/nvim" = {
@@ -79,6 +79,7 @@
     "${config.home.homeDirectory}/platform-tools"
     "$HOME/.local/share/nvim/mason/bin"
     "$HOME/.opencode/bin"
+    "$HOME/.local/bin"
   ];
 
   programs.zsh = {
@@ -119,7 +120,7 @@
         earlyInit = lib.mkOrder 500 "";
         mainInit = lib.mkOrder 1000 ''
           	eval "$(fnm env --shell zsh)"
-            source $HOME/.atuin/bin/env
+                eval "$(atuin init zsh)"
                 for _f in ${config.home.homeDirectory}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
                   source $_f; break
                 done

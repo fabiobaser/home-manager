@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     herdr = {
-      url = "github:ogulcancelik/herdr/v0.9.4";
+      url = "github:ogulcancelik/herdr/v0.9.5";
       inputs.nixpkgs.follows = "nixpkgs";
       # herdr pins a rust-overlay older than the `stdenv.is*` deprecation fix;
       # override it with the upstream fix commit to silence evaluation warnings.
