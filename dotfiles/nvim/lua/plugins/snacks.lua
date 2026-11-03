@@ -1,5 +1,46 @@
 local explorer_auto_close = true
 
+-- Explorer finder that nests foo.test.ts / foo.spec.ts under foo.ts.
+-- shortcut: only same-extension pairs (foo.tsx won't adopt foo.test.ts), extend the pattern if needed.
+local function nested_explorer(opts, ctx)
+	local inner = require("snacks.picker.source.explorer").explorer(opts, ctx)
+	if not ctx.filter:is_empty() then return inner end -- search results are flat/sorted
+	return function(cb)
+		local items, by_file = {}, {}
+		inner(function(item)
+			items[#items + 1] = item
+			by_file[item.file] = item
+		end)
+		local tests = {} ---@type table<table, table[]>
+		local nested = {}
+		for _, item in ipairs(items) do
+			if not item.dir then
+				local base = item.file:gsub("%.test(%.[^./]+)$", "%1"):gsub("%.spec(%.[^./]+)$", "%1")
+				local parent = base ~= item.file and by_file[base]
+				if parent then
+					nested[item] = true
+					tests[parent] = tests[parent] or {}
+					table.insert(tests[parent], item)
+				end
+			end
+		end
+		local last = {}
+		for _, item in ipairs(items) do
+			if not nested[item] then
+				if item.parent then
+					if last[item.parent] then last[item.parent].last = false end
+					item.last, last[item.parent] = true, item
+				end
+				cb(item)
+				for i, t in ipairs(tests[item] or {}) do
+					t.parent, t.last = item, i == #tests[item]
+					cb(t)
+				end
+			end
+		end
+	end
+end
+
 return {
 	{
 		"folke/snacks.nvim",
@@ -35,7 +76,7 @@ return {
 							sidekick_prompt = { layout = { preset = "vscode" } },
 						},
 					},
-					explorer = { auto_close = true, hidden = false },
+					explorer = { finder = nested_explorer, auto_close = true, hidden = false },
 				},
 				win = {
 					input = {

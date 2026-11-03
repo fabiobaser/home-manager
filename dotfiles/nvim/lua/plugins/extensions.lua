@@ -1,5 +1,12 @@
 return {
 	{
+		dir = vim.fn.expand("~/Developer/herdr.nvim"),
+		name = "herdr.nvim",
+		main = "herdr",
+		event = "VeryLazy",
+		opts ={}
+	},
+	{
 		"folke/persistence.nvim",
 		event = "BufReadPre", -- this will only start session saving when an actual file was opened
 		opts = {
@@ -96,5 +103,8 @@ return {
     buffer_leader_key = 'm', -- Per Buffer Mappings
   }
 },
-{ "ChmaraX/herdr-nvim", opts = {} }
+{ "ChmaraX/herdr-nvim", opts = {} },
+{
+  'vyfor/cord.nvim'
+}
 }

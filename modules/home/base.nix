@@ -12,7 +12,7 @@
 
   home.packages = with pkgs; [
     herdr.packages.${pkgs.system}.default
-    # jdk17
+    jdk17
     # (androidenv.composeAndroidPackages {
     #   cmdLineToolsVersion = "11.0";
     #   platformVersions = [ "34" ];
@@ -80,6 +80,7 @@
     "$HOME/.local/share/nvim/mason/bin"
     "$HOME/.opencode/bin"
     "$HOME/.local/bin"
+    "$HOME/.maestro/bin"
   ];
 
   programs.zsh = {
